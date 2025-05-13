@@ -1,0 +1,63 @@
+# docker-compose.yml
+version: '3.8'
+
+services:
+  # Servicio RabbitMQ
+  rabbitmq:
+    image: rabbitmq:management # Usa la imagen con la UI de gestión
+    container_name: rabbitmq
+    hostname: rabbitmq              # Nombre de host para que los servicios se conecten
+    ports:
+      - "5672:5672"   # Puerto AMQP
+      - "15672:15672" # Puerto UI de Gestión (accesible vía Play With Docker)
+    # volumes:
+    #   - rabbitmq_data:/var/lib/rabbitmq/ # Persistencia (opcional para PWD)
+    # environment:
+      # Puedes mantener los de por defecto (guest/guest) o definirlos
+      # RABBITMQ_DEFAULT_USER: user
+      # RABBITMQ_DEFAULT_PASS: password
+      # RABBITMQ_DEFAULT_VHOST: / # Virtual host por defecto
+    networks:
+      - event_network
+
+  # Servicio Productor
+  producer:
+    image: jeffer07/producer-service
+    container_name: producer-service
+    ports:
+      - "8080:8080" # Expone el puerto del API REST del productor
+    depends_on:
+      - rabbitmq # Asegura que RabbitMQ inicie antes
+    environment:
+      # Sobrescribe la configuración de application.properties para asegurar el host correcto
+      - SPRING_RABBITMQ_HOST=rabbitmq
+      - SPRING_RABBITMQ_PORT=5672
+      - SPRING_RABBITMQ_USERNAME=guest
+      - SPRING_RABBITMQ_PASSWORD=guest
+
+      # Opcional: Añadir perfiles de Spring, configuraciones de memoria, etc.
+      # - SPRING_PROFILES_ACTIVE=docker
+    networks:
+      - event_network
+
+  # Servicio Consumidor
+  consumer:
+    image: jeffer07/consumer-service
+    container_name: consumer-service
+    depends_on:
+      - rabbitmq
+    environment:
+      - SPRING_RABBITMQ_HOST=rabbitmq
+      - SPRING_RABBITMQ_PORT=5672
+    networks:
+      - event_network
+    # restart: unless-stopped # Reinicia si falla (útil en producción)
+
+# Red para que los contenedores se comuniquen por nombre de servicio
+networks:
+  event_network:
+    driver: bridge
+
+# Volumen para persistencia de datos de RabbitMQ (opcional)
+# volumes:
+#   rabbitmq_data:
