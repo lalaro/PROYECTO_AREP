@@ -1,24 +1,30 @@
-package com.eci.arep.payment_service;
+package com.eci.arep.payment_service.controller;
 
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import java.util.ArrayList;
+import java.util.List;
+
+import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/api/payment")
+@RequestMapping("/api/payments")
 public class PaymentController {
 
-    @PostMapping
-    public String processPayment() {
-        // Logic to process payment
-        return "Payment processed";
+    private final List<String> payments = new ArrayList<>();
+
+    @GetMapping
+    public List<String> listPayments() {
+        return payments;
     }
 
-    @GetMapping("/{id}")
-    public String getPaymentStatus(@PathVariable String id) {
-        // Logic to get payment status
-        return "Payment status for id: " + id;
+    @PostMapping
+    public String createPayment() {
+        payments.add("Nuevo Pago " + (payments.size() + 1));
+        return "Payment created";
+    }
+
+    @PostMapping("/process")
+    public String processPayment(@RequestBody String message) {
+        System.out.println("Procesando pago para: " + message);
+        return "Pago procesado";
     }
 }

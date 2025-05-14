@@ -1,5 +1,8 @@
 package com.eci.arep.restaurant_service;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -9,15 +12,16 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/api/restaurant")
 public class RestaurantController {
 
+    private final List<String> restaurants = new ArrayList<>();
+
     @GetMapping
-    public String listRestaurants() {
-        // Logic to list restaurants
-        return "List of restaurants";
+    public List<String> listRestaurants() {
+        return restaurants;
     }
 
     @PostMapping
     public String createRestaurant() {
-        // Logic to create a restaurant
+        restaurants.add("Nuevo Restaurante " + (restaurants.size() + 1));
         return "Restaurant created";
     }
 }
