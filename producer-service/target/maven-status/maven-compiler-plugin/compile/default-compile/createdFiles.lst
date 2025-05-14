@@ -1,0 +1,3 @@
+com\eci\arcn\producer_service\controller\MessageController.class
+com\eci\arcn\producer_service\config\RabbitMQConfig.class
+com\eci\arcn\producer_service\ProducerServiceApplication.class
