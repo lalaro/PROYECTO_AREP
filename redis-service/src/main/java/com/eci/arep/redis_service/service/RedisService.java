@@ -1,6 +1,6 @@
 package com.eci.arep.redis_service.service;
 
-import com.example.redisprocessor.model.RequestPayload;
+import com.eci.arep.redis_service.model.RequestPayload;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 
@@ -14,6 +14,7 @@ public class RedisService {
     }
 
     public void savePayload(RequestPayload payload) {
+        System.out.println("Saving payload: " + payload);
         redisTemplate.opsForList().rightPush(KEY, payload);
     }
 

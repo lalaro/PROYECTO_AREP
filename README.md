@@ -177,3 +177,12 @@ Este proyecto fue desarrollado como una práctica para aprender sobre mensajerí
 ## Source
 Clase de ARCN y guia de laboratorio:
 [Link del laboratorio](https://eci-arcn.github.io/Labs/event-driven-lab/)
+
+docker exec -it redis redis-cli (conectarse)
+LRANGE pendingPayloads 0 -1 (ver contenido de listas)
+KEYS *
+
+
+docker run --name redis -p 6379:6379 -d redis
+
+curl -X POST http://localhost:8082/data   -H "Content-Type: application/json"   -d '{"paied": true, "data": "valor de prueba"}'
