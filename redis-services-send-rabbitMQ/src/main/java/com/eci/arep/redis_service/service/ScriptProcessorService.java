@@ -31,12 +31,14 @@ public class ScriptProcessorService {
     @Value("${app.rabbitmq.routingkey}")
     private String routingKey;
 
+    @Value("${app.rabbitmq.routingKeyQueuePremium}")
+    private String routingKeyQueuePremium;
+
     @Autowired
     private ObjectMapper objectMapper;
 
-    public ScriptProcessorService(RedisService redisService){ //RabbitPublisherService rabbitPublisher) {
+    public ScriptProcessorService(RedisService redisService){ 
         this.redisService = redisService;
-        //this.rabbitPublisher = rabbitPublisher;
     }
 
     @Scheduled(fixedDelay = 5000)
@@ -44,7 +46,7 @@ public class ScriptProcessorService {
         RequestPayload payload;
         while ((payload = redisService.popNextPayload()) != null) {
             String result = runScript(payload);
-            //rabbitPublisher.sendToQueue(result);
+            
         }
     }
 
@@ -53,7 +55,14 @@ public class ScriptProcessorService {
         try {
             String json = objectMapper.writeValueAsString(payload);
             log.info("Enviando mensaje JSON: '{}' a exchange '{}' con routing key '{}'", json, exchangeName, routingKey);
-            rabbitTemplate.convertAndSend(exchangeName, routingKey, json);
+            if (payload.getIsPremium()){
+                log.info("Enviando mensaje a cola premium");
+                rabbitTemplate.convertAndSend(exchangeName, routingKeyQueuePremium, json);
+            } else {
+                log.info("Enviando mensaje a cola normal");
+                rabbitTemplate.convertAndSend(exchangeName, routingKey, json);
+                
+            }
         } catch (JsonProcessingException e) {
             log.error("Error serializando payload a JSON", e);
         }
