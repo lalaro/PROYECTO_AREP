@@ -24,6 +24,7 @@ public class ScriptProcessorService {
     }
 
     private String runScript(RequestPayload payload) {
-        return "processed: " + payload.getData();
+        System.out.println("Processing payload: " + payload);
+        return "processed of script of 5000 ml: " + payload.getData();
     }
 }
