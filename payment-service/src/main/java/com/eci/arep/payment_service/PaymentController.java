@@ -1,4 +1,4 @@
-package com.eci.arep.payment_service.controller;
+package com.eci.arep.payment_service;
 
 import java.util.ArrayList;
 import java.util.List;

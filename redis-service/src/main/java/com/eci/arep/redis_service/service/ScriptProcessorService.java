@@ -14,7 +14,7 @@ public class ScriptProcessorService {
         //this.rabbitPublisher = rabbitPublisher;
     }
 
-    @Scheduled(fixedRate = 5000)
+    @Scheduled(fixedDelay = 5000)
     public void processPendingPayloads() {
         RequestPayload payload;
         while ((payload = redisService.popNextPayload()) != null) {
