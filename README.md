@@ -220,10 +220,14 @@ Se muestra de la siguiente manera:
 |------------------|--------|--------------------------------------------------|---------------------------------------------|--------------------------------------------------------------------------------|
 | Productor        | POST   | `/api/messages/send?message=MENSAJE`             | Envía un mensaje a RabbitMQ                 | `curl -X POST "http://localhost:8080/api/messages/send?message=HolaMundo"`     |
 | Consumidor       | GET    | `/api/messages/received`                         | Obtiene los mensajes recibidos (si aplica)  | `curl "http://localhost:8081/api/messages/received"`                           |
-| Delivery Service | POST   | `/api/delivery`                                  | Crea una entrega (ejemplo)                  | `curl -X POST "http://localhost:8083/api/delivery" -d '{...}'`                 |
-| Payment Service  | POST   | `/api/payment`                                   | Realiza un pago (ejemplo)                   | `curl -X POST "http://localhost:8084/api/payment" -d '{...}'`                  |
-
+| Delivery Service | POST   | `/api/delivery`                                  | Crea una entrega (ejemplo)                  | `curl -X POST "http://localhost:8082/api/delivery" -d '{...}'`                 |
+| Payment Service  | POST   | `/api/payment`                                   | Realiza un pago (ejemplo)                   | `curl -X POST "http://localhost:8083/api/payment" -d '{...}'`                  |
+| Restaurant Service  | POST   | `/api/restaurant`                                   | Procesar pedidos recibidos(ejemplo)                   | `curl -X POST "http://localhost:8084/api/restaurant" -d '{...}'`                  |
 ---
+## Demo
+
+Puedes ver una demostración del funcionamiento del proyecto en el siguiente video:  
+[![Ver Demo en YouTube](https://img.shields.io/badge/YouTube-Demo-red?logo=youtube)](https://youtu.be/W3DbIF4oNRM)
 
 ## Autores
 **Yeferson Estiben Mesa Vargas**
