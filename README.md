@@ -1,9 +1,46 @@
 # PROYECTO AREP: Optimización de Sistemas Distribuidos: Integración de Redis y RabbitMQ para Mejorar Rendimiento y Eficiencia.
 
 ## ¿De qué trata el proyecto?
-Este proyecto es una implementación de un sistema de mensajería basado en RabbitMQ utilizando Spring Boot. Consiste en un **Productor** que envía mensajes a un **Exchange** de RabbitMQ y un **Consumidor** que escucha y procesa los mensajes desde una cola. Es ideal para aprender y practicar conceptos de mensajería asíncrona y arquitectura basada en eventos.
+El objetivo del proyecto es evaluar y comparar directamente las tecnologías de software RabbitMQ y Redis utilizando un conjunto de doce atributos de calidad del software.
 
-El consumidor utiliza un componente llamado `MessageListener` que escucha mensajes desde una cola configurada en el archivo `application.properties` y los procesa, registrando los mensajes recibidos en los logs y mostrando un mensaje procesado en la consola.
+Adicionalmente, busca demostrar y analizar los beneficios de una arquitectura híbrida que combina Redis y RabbitMQ a través de una implementación práctica.
+
+Finalmente, el proyecto tiene como objetivo ofrecer una comprensión integral de las capacidades de estas tecnologías y proporcionar información valiosa para la toma de decisiones al seleccionar la solución más adecuada para diferentes necesidades empresariales, considerando tanto el rendimiento como los aspectos prácticos de su uso.
+
+## Arquitectura general de Ejemplo 
+
+Tomando como referencia la arquitectura general de Airbnb, se observa la integraci´on de m´ultiples
+tecnolog´ıas clave para la gesti´on de su compleja plataforma. Entre ellas, Redis se destaca como una
+soluci´on de almacenamiento en memoria de alta velocidad, probablemente utilizada para la gesti´on de
+cach´e, sesiones de usuario y contadores en tiempo real, optimizando as´ı la latencia y el rendimiento de
+las interacciones de los usuarios con la plataforma. Por otro lado, la inclusi´on de RabbitMQ sugiere
+su rol en la facilitaci´on de la comunicaci´on as´ıncrona y confiable entre los diversos microservicios que
+componen la arquitectura.
+Espec´ıficamente, RabbitMQ probablemente se encarga de la mensajer´ıa as´ıncrona entre los diferentes servicios de Airbnb. Por ejemplo, cuando un usuario realiza una reserva, el servicio de reservas
+env´ıa un mensaje a trav´es de RabbitMQ. Este mensaje es luego consumido por otros servicios, como
+el de notificaciones para enviar correos electr´onicos de confirmaci´on y el de gesti´on de inventario para
+actualizar la disponibilidad. De esta manera, RabbitMQ asegura que las acciones posteriores a la reserva se realicen de forma confiable y sin bloquear la respuesta al usuario, contribuyendo a la robustez
+y la escalabilidad de la plataforma
+
+![Arquitectura General](images\Arquitectura General Airbnb.jpeg)
+
+## Arquitectura propuesta
+
+La arquitectura general representa un sistema de microservicios que utiliza Redis como una capa de
+almacenamiento temporal y cach´e, y RabbitMQ como un agente de mensajer´ıa para la comunicaci´on
+as´ıncrona entre servicios. El flujo principal de informaci´on y procesamiento se puede describir de la
+siguiente manera:
+- Ingreso de Datos: El Microservicio 1 recibe datos (/data) mediante una API REST (POST).
+- Almacenamiento Temporal en Redis: El Microservicio 1 guarda temporalmente los datos en Redis
+para acceso r´apido antes del procesamiento. Redis gestiona el ciclo de vida de estos datos (Save/Delete).
+- Proceso Peri´odico (Script Enrutador): Un script en el Microservicio 1 se ejecuta cada 5 segundos,
+revisando Redis por nuevos datos.
+- Enrutamiento a Colas de Mensajes: Si hay datos, el RabbitMQ Messenger”los toma y los env´ıa a
+las colas ”queue.o ”queuePremium”seg´un una l´ogica interna. Si no hay datos, no se env´ıan mensajes.
+- Consumo por Microservicios: Los Microservicios 2 y 3 escuchan las colas de RabbitMQ (”queue 2
+posiblemente ”queuePremium”) y procesan los mensajes recibidos.
+
+![Arquitectura General](images/Arquitectura General.jpeg)
 
 ---
 
