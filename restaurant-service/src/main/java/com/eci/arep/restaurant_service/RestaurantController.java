@@ -24,4 +24,9 @@ public class RestaurantController {
         restaurants.add("Nuevo Restaurante " + (restaurants.size() + 1));
         return "Restaurant created";
     }
+
+    @GetMapping("/test")
+    public String test() {
+        return "Restaurant service OK";
+    }
 }

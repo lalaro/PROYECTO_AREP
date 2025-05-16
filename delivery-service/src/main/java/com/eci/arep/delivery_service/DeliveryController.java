@@ -25,4 +25,9 @@ public class DeliveryController {
         deliveries.add("Nueva Entrega " + (deliveries.size() + 1));
         return "Delivery created";
     }
+    
+    @GetMapping("/test")
+    public String test() {
+        return "Delivery service OK";
+    }
 }
