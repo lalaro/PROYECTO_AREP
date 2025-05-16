@@ -214,12 +214,29 @@ Se muestra de la siguiente manera:
 
 ![alt text](images/image-6.png)
 
+## Uso de Endpoints
+
+| Servicio         | Método | Endpoint                                         | Descripción                                 | Ejemplo de uso                                                                 |
+|------------------|--------|--------------------------------------------------|---------------------------------------------|--------------------------------------------------------------------------------|
+| Productor        | POST   | `/api/messages/send?message=MENSAJE`             | Envía un mensaje a RabbitMQ                 | `curl -X POST "http://localhost:8080/api/messages/send?message=HolaMundo"`     |
+| Consumidor       | GET    | `/api/messages/received`                         | Obtiene los mensajes recibidos (si aplica)  | `curl "http://localhost:8081/api/messages/received"`                           |
+| Delivery Service | POST   | `/api/delivery`                                  | Crea una entrega (ejemplo)                  | `curl -X POST "http://localhost:8083/api/delivery" -d '{...}'`                 |
+| Payment Service  | POST   | `/api/payment`                                   | Realiza un pago (ejemplo)                   | `curl -X POST "http://localhost:8084/api/payment" -d '{...}'`                  |
+
 ---
 
 ## Autores
 **Yeferson Estiben Mesa Vargas**
+
 **Laura Valentina Rodríguez Ortegón**
+
 Este proyecto fue desarrollado como una práctica para aprender sobre mensajería asíncrona con RabbitMQ, Redis y Spring Boot.
+
+
+## Licencia
+
+Este proyecto está licenciado bajo la Licencia MIT. Consulta el archivo [LICENSE](LICENSE) para más detalles.
+
 
 ## Source
 Clase de AREP:
