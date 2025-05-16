@@ -1,4 +1,4 @@
-# Queue_RabbitMQ_ARCN
+# PROYECTO AREP: Optimización de Sistemas Distribuidos: Integración de Redis y RabbitMQ para Mejorar Rendimiento y Eficiencia.
 
 ## ¿De qué trata el proyecto?
 Este proyecto es una implementación de un sistema de mensajería basado en RabbitMQ utilizando Spring Boot. Consiste en un **Productor** que envía mensajes a un **Exchange** de RabbitMQ y un **Consumidor** que escucha y procesa los mensajes desde una cola. Es ideal para aprender y practicar conceptos de mensajería asíncrona y arquitectura basada en eventos.
@@ -75,26 +75,72 @@ El proyecto sigue una arquitectura basada en eventos:
 ---
 
 ## ¿Qué estructura tiene el proyecto?
-El proyecto está organizado de la siguiente manera:
+El proyecto está organizado de la siguiente manera, incluyendo todos los microservicios y componentes relevantes:
+
 ```
 Queue_RabbitMQ_ARCN/
-├── producer-service/
+├── producer-service/                           # Servicio Productor: envía mensajes a RabbitMQ
 │   ├── src/
-│   │   ├── main/
-│   │   │   ├── java/com/eci/arcn/producer_service/  # Código del productor
-│   │   │   └── resources/
-│   │   │       └── application.properties          # Configuración del productor
-│   └── target/                                      # Archivos generados por Maven
-├── consumer-service/
+│   │   └── main/
+│   │       ├── java/com/eci/arcn/producer_service/      # Código fuente del productor
+│   │       └── resources/
+│   │           └── application.properties               # Configuración del productor
+│   └── target/                                         # Archivos generados por Maven
+│
+├── consumer-service/                           # Servicio Consumidor: recibe y procesa mensajes de RabbitMQ
 │   ├── src/
-│   │   ├── main/
-│   │   │   ├── java/com/eci/arcn/consumer_service/  # Código del consumidor
-│   │   │   │   └── listener/MessageListener.java    # Lógica para procesar mensajes
-│   │   │   └── resources/
-│   │   │       └── application.properties          # Configuración del consumidor
-│   └── target/                                      # Archivos generados por Maven
-├── docker-compose.yml                               # Configuración para Docker Compose
+│   │   └── main/
+│   │       ├── java/com/eci/arcn/consumer_service/      # Código fuente del consumidor
+│   │       │   └── listener/MessageListener.java        # Lógica para procesar mensajes
+│   │       └── resources/
+│   │           └── application.properties               # Configuración del consumidor
+│   └── target/                                         # Archivos generados por Maven
+│
+├── delivery-service/                           # Microservicio de entregas
+│   ├── src/
+│   │   └── main/
+│   │       ├── java/com/eci/arep/delivery_service/      # Código fuente del servicio de entregas
+│   │       └── resources/
+│   │           └── application.properties               # Configuración del servicio de entregas
+│   └── target/                                         # Archivos generados por Maven
+│
+├── payment-service/                            # Microservicio de pagos
+│   ├── src/
+│   │   └── main/
+│   │       ├── java/com/eci/arep/payment_service/       # Código fuente del servicio de pagos
+│   │       └── resources/
+│   │           └── application.properties               # Configuración del servicio de pagos
+│   └── target/                                         # Archivos generados por Maven
+│
+├── restaurant-service/                         # Microservicio de restaurantes
+│   ├── src/
+│   │   └── main/
+│   │       ├── java/com/eci/arep/restaurant_service/    # Código fuente del servicio de restaurantes
+│   │       └── resources/
+│   │           └── application.properties               # Configuración del servicio de restaurantes
+│   └── target/                                         # Archivos generados por Maven
+│
+├── redis-service/                              # Servicio de Redis (si aplica)
+│   └── ...                                     # Archivos y configuración para Redis
+│
+├── redis-services-send-rabbitMQ/               # Servicio para enviar mensajes a RabbitMQ usando Redis
+│   └── ...                                     # Archivos y configuración
+│
+├── delivery-service-receive-rabbitMQ/          # Servicio para recibir mensajes de RabbitMQ en entregas
+│   └── ...                                     # Archivos y configuración
+│
+├── consume_api_redis_rabbitMQ.py               # Script Python para consumir API y Redis con RabbitMQ
+├── docker-compose.yml                          # Configuración para Docker Compose
+├── .gitignore
+├── pom.xml                                     # Archivo de configuración Maven raíz
+└── README.md
 ```
+
+- Cada microservicio cuenta con su propio código fuente y archivo de configuración.
+- El archivo `docker-compose.yml` permite levantar todos los servicios y dependencias fácilmente.
+- Existen scripts y servicios auxiliares para integración con Redis y pruebas.
+
+> Esta estructura facilita la escalabilidad y el mantenimiento, siguiendo buenas prácticas de microservicios y separación de responsabilidades.
 
 ---
 
@@ -170,12 +216,13 @@ Se muestra de la siguiente manera:
 
 ---
 
-## Autor
-**Jeffer07**  
-Este proyecto fue desarrollado como una práctica para aprender sobre mensajería asíncrona con RabbitMQ y Spring Boot.
+## Autores
+**Yeferson Estiben Mesa Vargas**
+**Laura Valentina Rodríguez Ortegón**
+Este proyecto fue desarrollado como una práctica para aprender sobre mensajería asíncrona con RabbitMQ, Redis y Spring Boot.
 
 ## Source
-Clase de ARCN y guia de laboratorio:
+Clase de AREP:
 [Link del laboratorio](https://eci-arcn.github.io/Labs/event-driven-lab/)
 
 docker exec -it redis redis-cli (conectarse)
