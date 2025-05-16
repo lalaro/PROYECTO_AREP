@@ -22,8 +22,7 @@ el de notificaciones para enviar correos electr´onicos de confirmaci´on y el d
 actualizar la disponibilidad. De esta manera, RabbitMQ asegura que las acciones posteriores a la reserva se realicen de forma confiable y sin bloquear la respuesta al usuario, contribuyendo a la robustez
 y la escalabilidad de la plataforma
 
-![Arquitectura General](images\Arquitectura General Airbnb.jpeg)
-
+![Arquitectura de Ejemplo](images/ArquitecturaGeneralAirbnb.jpeg)
 ## Arquitectura propuesta
 
 La arquitectura general representa un sistema de microservicios que utiliza Redis como una capa de
@@ -40,8 +39,7 @@ las colas ”queue.o ”queuePremium”seg´un una l´ogica interna. Si no hay d
 - Consumo por Microservicios: Los Microservicios 2 y 3 escuchan las colas de RabbitMQ (”queue 2
 posiblemente ”queuePremium”) y procesan los mensajes recibidos.
 
-![Arquitectura General](images/Arquitectura General.jpeg)
-
+![Arquitectura General](images/ArquitecturaGeneral.jpeg)
 ---
 
 ## ¿Qué se requiere instalar?
