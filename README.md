@@ -186,3 +186,5 @@ KEYS *
 docker run --name redis -p 6379:6379 -d redis
 
 curl -X POST http://localhost:8082/data   -H "Content-Type: application/json"   -d '{"paied": true, "data": "valor de prueba"}'
+
+curl -X POST http://localhost:8082/data   -H "Content-Type: application/json"   -d '{"paied": true, "data": "valor de prueba", "isPremium": true}'
